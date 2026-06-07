@@ -1,0 +1,104 @@
+<section class="section cart-section">
+  <div class="section-inner">
+    <div class="section-heading">
+      <p class="eyebrow">Shopping Cart</p>
+      <h1>Your personalized order</h1>
+    </div>
+
+    {% if cart.item_count > 0 %}
+      <form action="/cart" method="post" novalidate class="cart-layout">
+        <div class="cart-items">
+          {% for item in cart.items %}
+            <article class="cart-item">
+              <a class="cart-item-media" href="{{ item.url }}">
+                {% if item.image %}
+                  <img src="{{ item.image | img_url: '240x240' }}" alt="{{ item.product.title | escape }}" loading="lazy">
+                {% else %}
+                  <span>{{ item.product.title }}</span>
+                {% endif %}
+              </a>
+
+              <div class="cart-item-main">
+                <div>
+                  <a class="cart-item-title" href="{{ item.url }}">{{ item.product.title }}</a>
+                  {% unless item.variant.title == 'Default Title' %}
+                    <p class="cart-item-meta">{{ item.variant.title }}</p>
+                  {% endunless %}
+
+                  {% if item.properties.size > 0 %}
+                    <dl class="cart-properties">
+                      {% for property in item.properties %}
+                        {% assign first_character = property.first | slice: 0 %}
+                        {% if property.last != blank and first_character != '_' %}
+                          <div>
+                            <dt>{{ property.first }}</dt>
+                            <dd>{{ property.last }}</dd>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </dl>
+                  {% endif %}
+                </div>
+
+                <div class="cart-item-controls">
+                  <label for="updates_{{ item.key }}">Quantity</label>
+                  <input id="updates_{{ item.key }}" name="updates[]" type="number" min="0" value="{{ item.quantity }}">
+                  <a href="{{ item.url_to_remove }}" class="cart-remove">Remove</a>
+                </div>
+
+                <div class="cart-item-price">
+                  {% if item.original_line_price != item.final_line_price %}
+                    <s>{{ item.original_line_price | money }}</s>
+                  {% endif %}
+                  <strong>{{ item.final_line_price | money }}</strong>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+
+        <aside class="cart-summary">
+          <h2>Order Summary</h2>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <p class="summary-note">Shipping and final taxes are calculated at Shopify checkout. Customizer estimates appear in item details when selected.</p>
+
+          <div class="cart-actions">
+            <button type="submit" name="update" class="button button-secondary">Update cart</button>
+            <button type="submit" name="checkout" class="button button-primary">Proceed to checkout</button>
+            <a href="/pages/customize" class="button button-secondary">Continue shopping</a>
+          </div>
+
+          <div class="payment-badges">
+            <span>Card</span>
+            <span>Shop Pay</span>
+            <span>Google Pay</span>
+          </div>
+        </aside>
+      </form>
+
+      <div class="trust-grid">
+        <article>
+          <strong>Secure Payment</strong>
+          <span>Protected Shopify checkout</span>
+        </article>
+        <article>
+          <strong>Fast Shipping</strong>
+          <span>3-5 business days delivery</span>
+        </article>
+        <article>
+          <strong>Easy Returns</strong>
+          <span>30-day return policy</span>
+        </article>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h2>Your cart is empty</h2>
+        <p>Start customizing your perfect cover.</p>
+        <a class="button button-primary" href="/pages/customize">Start customizing</a>
+      </div>
+    {% endif %}
+  </div>
+</section>

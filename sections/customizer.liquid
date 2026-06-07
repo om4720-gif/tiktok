@@ -1,0 +1,299 @@
+{% assign custom_product = all_products[section.settings.product_handle] %}
+
+<section class="section section-customizer customizer-shell" data-customizer>
+  <div class="section-inner customizer-page-grid">
+    <div class="customizer-preview-panel">
+      <div class="customizer-sticky">
+        <button class="preview-frame" type="button" data-preview-frame aria-label="Zoom product preview">
+          <img
+            src="{{ 'customizer-burgundy.jpg' | asset_url }}"
+            alt="Customized leather cover preview"
+            class="preview-image"
+            data-preview-image
+            loading="eager"
+          >
+          <span class="engraving-preview" data-engraving-preview></span>
+          <span class="zoom-badge">Zoom</span>
+        </button>
+
+        <div class="feature-note">
+          <strong>Premium details</strong>
+          <span>Premium crocodile-textured vegan leather</span>
+          <span>Soft microfiber interior lining</span>
+          <span data-fit-copy>Precision-fit for MacBook Air 13"</span>
+          <span>Scratch-resistant and handcrafted with care</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="customizer-controls">
+      <p class="eyebrow">Create Your Cover</p>
+      <h1>Design Your <span>Perfect Cover</span></h1>
+      <p class="customizer-intro">Choose your device, finish, engraving text, font, and quantity before adding the personalized cover to cart.</p>
+
+      <div class="customizer-price">
+        <strong data-total-price>500 EGP</strong>
+        <small data-price-note></small>
+      </div>
+
+      {% if custom_product and custom_product.selected_or_first_available_variant %}
+        <form method="post" action="/cart/add" class="customizer-form" data-customizer-form>
+          <input type="hidden" name="id" value="{{ custom_product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="properties[Device]" data-prop-device value="MacBook Air 13&quot;">
+          <input type="hidden" name="properties[Cover color]" data-prop-color value="Burgundy Crocodile">
+          <input type="hidden" name="properties[Engraving text]" data-prop-engraving-text>
+          <input type="hidden" name="properties[Engraving font]" data-prop-engraving-font value="Elegant Script">
+          <input type="hidden" name="properties[Engraving color]" data-prop-engraving-color value="Gold">
+          <input type="hidden" name="properties[Customizer estimate]" data-prop-estimate value="500 EGP">
+
+          <div class="control-group">
+            <div class="control-heading">
+              <label>Select Device</label>
+              <span data-selected-device>MacBook Air 13"</span>
+            </div>
+
+            <p class="option-label">MacBook</p>
+            <div class="option-grid option-grid-devices">
+              <button type="button" class="choice-card is-active" data-device="MacBook Air 13&quot;" data-device-type="macbook" data-price="500">MacBook Air 13"<small>500 EGP</small></button>
+              <button type="button" class="choice-card" data-device="MacBook Air 15&quot;" data-device-type="macbook" data-price="550">MacBook Air 15"<small>550 EGP</small></button>
+              <button type="button" class="choice-card" data-device="MacBook Pro 13&quot;" data-device-type="macbook" data-price="500">MacBook Pro 13"<small>500 EGP</small></button>
+              <button type="button" class="choice-card" data-device="MacBook Pro 14&quot;" data-device-type="macbook" data-price="550">MacBook Pro 14"<small>550 EGP</small></button>
+              <button type="button" class="choice-card" data-device="MacBook Pro 16&quot;" data-device-type="macbook" data-price="600">MacBook Pro 16"<small>600 EGP</small></button>
+            </div>
+
+            <p class="option-label">iPad</p>
+            <div class="option-grid option-grid-devices">
+              <button type="button" class="choice-card" data-device="iPad Mini" data-device-type="ipad" data-price="400">iPad Mini<small>400 EGP</small></button>
+              <button type="button" class="choice-card" data-device="iPad 10th Gen" data-device-type="ipad" data-price="400">iPad 10th Gen<small>400 EGP</small></button>
+              <button type="button" class="choice-card" data-device="iPad Air 11&quot;" data-device-type="ipad" data-price="450">iPad Air 11"<small>450 EGP</small></button>
+              <button type="button" class="choice-card" data-device="iPad Air 13&quot;" data-device-type="ipad" data-price="450">iPad Air 13"<small>450 EGP</small></button>
+              <button type="button" class="choice-card" data-device="iPad Pro 11&quot;" data-device-type="ipad" data-price="500">iPad Pro 11"<small>500 EGP</small></button>
+              <button type="button" class="choice-card" data-device="iPad Pro 13&quot;" data-device-type="ipad" data-price="550">iPad Pro 13"<small>550 EGP</small></button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="control-heading">
+              <label>Select Color</label>
+              <span data-selected-color>Burgundy Crocodile</span>
+            </div>
+            <div class="swatch-grid">
+              <button type="button" class="swatch is-active" style="--swatch:#6B1F3D" data-color="Burgundy Crocodile" data-color-id="burgundy" data-image="{{ 'customizer-burgundy.jpg' | asset_url }}" aria-label="Burgundy Crocodile"></button>
+              <button type="button" class="swatch" style="--swatch:#3E2723" data-color="Chocolate Brown" data-color-id="chocolate" data-image="{{ 'customizer-brown.png' | asset_url }}" aria-label="Chocolate Brown"></button>
+              <button type="button" class="swatch" style="--swatch:#1A1A1A" data-color="Black Crocodile" data-color-id="black" data-image="{{ 'customizer-black.jpg' | asset_url }}" aria-label="Black Crocodile"></button>
+              <button type="button" class="swatch" style="--swatch:#C2956E" data-color="Camel Tan" data-color-id="camel" data-image="{{ 'customizer-camel.jpg' | asset_url }}" aria-label="Camel Tan"></button>
+              <button type="button" class="swatch" style="--swatch:#2C5530" data-color="Forest Green" data-color-id="forest" data-image="{{ 'customizer-green.png' | asset_url }}" aria-label="Forest Green"></button>
+              <button type="button" class="swatch" style="--swatch:#1E3A5F" data-color="Navy Blue" data-color-id="navy" data-image="{{ 'customizer-blue.png' | asset_url }}" aria-label="Navy Blue"></button>
+              <button type="button" class="swatch swatch-light" style="--swatch:#F4F1E8" data-color="Ivory Cream" data-color-id="ivory" data-image="{{ 'customizer-cream.png' | asset_url }}" aria-label="Ivory Cream"></button>
+            </div>
+          </div>
+
+          <div class="control-group engraving-card">
+            <div class="toggle-row">
+              <label for="engraving-enabled">Personalized Engraving</label>
+              <span>Add engraving (+30 EGP)</span>
+              <input id="engraving-enabled" type="checkbox" data-engraving-toggle checked>
+            </div>
+
+            <div data-engraving-options>
+              <div class="form-group">
+                <label for="engraving_text">Your text (max 25 characters)</label>
+                <input type="text" id="engraving_text" maxlength="25" placeholder="Enter your name or text" data-engraving-input>
+                <small class="character-count"><span data-char-count>0</span> / 25</small>
+              </div>
+
+              <div class="form-group">
+                <label>Font style</label>
+                <div class="option-grid option-grid-fonts">
+                  <button type="button" class="choice-card is-active" data-font="Elegant Script" data-font-family="Brush Script MT, cursive">Elegant Script</button>
+                  <button type="button" class="choice-card" data-font="Modern Serif" data-font-family="Georgia, serif">Modern Serif</button>
+                  <button type="button" class="choice-card" data-font="Minimal Sans Serif" data-font-family="Arial, sans-serif">Minimal Sans Serif</button>
+                  <button type="button" class="choice-card" data-font="Classic Signature" data-font-family="Palatino Linotype, serif">Classic Signature</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Engraving color</label>
+                <div class="mini-swatch-grid">
+                  <button type="button" class="mini-swatch is-active" style="--swatch:#D4AF37" data-engraving-color="Gold" data-engraving-hex="#D4AF37" aria-label="Gold"></button>
+                  <button type="button" class="mini-swatch" style="--swatch:#C0C0C0" data-engraving-color="Silver" data-engraving-hex="#C0C0C0" aria-label="Silver"></button>
+                  <button type="button" class="mini-swatch" style="--swatch:#B76E79" data-engraving-color="Rose Gold" data-engraving-hex="#B76E79" aria-label="Rose Gold"></button>
+                  <button type="button" class="mini-swatch mini-swatch-light" style="--swatch:#FFFFFF" data-engraving-color="White" data-engraving-hex="#FFFFFF" aria-label="White"></button>
+                  <button type="button" class="mini-swatch" style="--swatch:#000000" data-engraving-color="Black" data-engraving-hex="#000000" aria-label="Black"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="Quantity">Quantity</label>
+            <div class="quantity-stepper">
+              <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
+              <input id="Quantity" type="number" name="quantity" min="1" value="1" data-quantity>
+              <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+
+          <div class="action-stack">
+            <button type="submit" class="button button-primary">Add to cart</button>
+            <button type="submit" class="button button-secondary" name="return_to" value="/checkout">Buy now</button>
+          </div>
+
+          <p class="delivery-note">Estimated delivery: 3-5 business days. Express shipping is available at checkout.</p>
+        </form>
+      {% else %}
+        <div class="customizer-missing">
+          <strong>Connect a Shopify product to enable cart checkout.</strong>
+          <p>Create a product with the handle <code>{{ section.settings.product_handle }}</code>, or change this section setting to your custom cover product handle.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.currentScript.previousElementSibling;
+    if (!root || root.dataset.initialized === 'true') return;
+    root.dataset.initialized = 'true';
+
+    const state = {
+      device: 'MacBook Air 13"',
+      deviceType: 'macbook',
+      basePrice: 500,
+      color: 'Burgundy Crocodile',
+      engravingEnabled: true,
+      engravingText: '',
+      font: 'Elegant Script',
+      fontFamily: 'Brush Script MT, cursive',
+      engravingColor: 'Gold',
+      engravingHex: '#D4AF37',
+      quantity: 1
+    };
+
+    const engravingCost = 30;
+    const qs = (selector) => root.querySelector(selector);
+    const qsa = (selector) => Array.from(root.querySelectorAll(selector));
+
+    const update = () => {
+      const hasEngraving = state.engravingEnabled && state.engravingText.trim().length > 0;
+      const unit = state.basePrice + (hasEngraving ? engravingCost : 0);
+      const total = unit * state.quantity;
+      qs('[data-total-price]').textContent = `${total} EGP`;
+      qs('[data-price-note]').textContent = hasEngraving ? `(Base ${state.basePrice} + Engraving ${engravingCost} EGP)` : '';
+      qs('[data-selected-device]').textContent = state.device;
+      qs('[data-selected-color]').textContent = state.color;
+      qs('[data-fit-copy]').textContent = `Precision-fit for ${state.device}`;
+
+      const previewText = qs('[data-engraving-preview]');
+      previewText.textContent = hasEngraving ? state.engravingText : '';
+      previewText.style.fontFamily = state.fontFamily;
+      previewText.style.color = state.engravingHex;
+
+      const options = qs('[data-engraving-options]');
+      options.hidden = !state.engravingEnabled;
+
+      qs('[data-prop-device]').value = state.device;
+      qs('[data-prop-color]').value = state.color;
+      qs('[data-prop-engraving-text]').value = hasEngraving ? state.engravingText : '';
+      qs('[data-prop-engraving-font]').value = hasEngraving ? state.font : '';
+      qs('[data-prop-engraving-color]').value = hasEngraving ? state.engravingColor : '';
+      qs('[data-prop-estimate]').value = `${total} EGP`;
+    };
+
+    qsa('[data-device]').forEach((button) => {
+      button.addEventListener('click', () => {
+        qsa('[data-device]').forEach((item) => item.classList.remove('is-active'));
+        button.classList.add('is-active');
+        state.device = button.dataset.device;
+        state.deviceType = button.dataset.deviceType;
+        state.basePrice = Number(button.dataset.price);
+        update();
+      });
+    });
+
+    qsa('[data-color]').forEach((button) => {
+      button.addEventListener('click', () => {
+        qsa('[data-color]').forEach((item) => item.classList.remove('is-active'));
+        button.classList.add('is-active');
+        state.color = button.dataset.color;
+        qs('[data-preview-image]').src = button.dataset.image;
+        update();
+      });
+    });
+
+    qsa('[data-font]').forEach((button) => {
+      button.addEventListener('click', () => {
+        qsa('[data-font]').forEach((item) => item.classList.remove('is-active'));
+        button.classList.add('is-active');
+        state.font = button.dataset.font;
+        state.fontFamily = button.dataset.fontFamily;
+        update();
+      });
+    });
+
+    qsa('[data-engraving-color]').forEach((button) => {
+      button.addEventListener('click', () => {
+        qsa('[data-engraving-color]').forEach((item) => item.classList.remove('is-active'));
+        button.classList.add('is-active');
+        state.engravingColor = button.dataset.engravingColor;
+        state.engravingHex = button.dataset.engravingHex;
+        update();
+      });
+    });
+
+    qs('[data-engraving-toggle]').addEventListener('change', (event) => {
+      state.engravingEnabled = event.target.checked;
+      update();
+    });
+
+    qs('[data-engraving-input]').addEventListener('input', (event) => {
+      state.engravingText = event.target.value;
+      qs('[data-char-count]').textContent = state.engravingText.length;
+      update();
+    });
+
+    qs('[data-qty-minus]').addEventListener('click', () => {
+      state.quantity = Math.max(1, state.quantity - 1);
+      qs('[data-quantity]').value = state.quantity;
+      update();
+    });
+
+    qs('[data-qty-plus]').addEventListener('click', () => {
+      state.quantity += 1;
+      qs('[data-quantity]').value = state.quantity;
+      update();
+    });
+
+    qs('[data-quantity]').addEventListener('input', (event) => {
+      state.quantity = Math.max(1, Number(event.target.value) || 1);
+      event.target.value = state.quantity;
+      update();
+    });
+
+    qs('[data-preview-frame]').addEventListener('click', () => {
+      qs('[data-preview-frame]').classList.toggle('is-zoomed');
+    });
+
+    update();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product customizer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Customizer product handle",
+      "default": "custom-luxury-cover"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product customizer"
+    }
+  ]
+}
+{% endschema %}

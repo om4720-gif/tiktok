@@ -1,0 +1,55 @@
+<section class="section section-product">
+  <div class="section-inner product-page-grid">
+    <div class="product-gallery">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: '900x900' }}" alt="{{ product.title }}" />
+      {% endif %}
+    </div>
+
+    <div class="product-details">
+      <p class="eyebrow">Personalized Luxury</p>
+      <h1>{{ product.title }}</h1>
+      <p class="product-price">{{ product.price | money }}</p>
+      <div class="product-description">{{ product.description }}</div>
+
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+
+        {% if product.options.size > 1 %}
+          <div class="form-group">
+            <label for="ProductSelect-option-0">Choose option</label>
+            {{ product.options_with_values[0].values | join: ', ' }}
+          </div>
+        {% endif %}
+
+        <div class="form-group">
+          <label for="engraving_text">Engraving text</label>
+          <input type="text" id="engraving_text" name="properties[Engraving text]" placeholder="Add your engraving" />
+        </div>
+
+        <div class="form-group">
+          <label for="engraving_font">Engraving font</label>
+          <select id="engraving_font" name="properties[Engraving font]">
+            <option>Elegant Script</option>
+            <option>Modern Serif</option>
+            <option>Minimal Sans Serif</option>
+            <option>Classic Signature</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="engraving_color">Engraving color</label>
+          <select id="engraving_color" name="properties[Engraving color]">
+            <option>Gold</option>
+            <option>Silver</option>
+            <option>Rose Gold</option>
+            <option>White</option>
+            <option>Black</option>
+          </select>
+        </div>
+
+        <button type="submit" class="button button-primary">Add to cart</button>
+      </form>
+    </div>
+  </div>
+</section>

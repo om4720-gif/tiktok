@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement bar text",
+        "default": "Free shipping on orders over EGP 1500"
+      },
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary brand color",
+        "default": "#6B1F3D"
+      }
+    ]
+  }
+]

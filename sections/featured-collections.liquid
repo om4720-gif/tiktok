@@ -1,0 +1,21 @@
+<section class="section section-collections">
+  <div class="section-inner">
+    <div class="section-heading">
+      <p class="eyebrow">Our Collections</p>
+      <h2>Curated luxury covers for every device</h2>
+    </div>
+
+    <div class="collection-grid">
+      {% assign collection_list = collections | where: 'handle', 'macbook-collection' | concat: collections | where: 'handle', 'ipad-collection' %}
+      {% for collection in collection_list limit: 4 %}
+        <article class="collection-card">
+          <a href="{{ collection.url }}">
+            <div class="collection-icon">{{ forloop.index | times: 1 }}</div>
+            <h3>{{ collection.title }}</h3>
+            <p>{{ collection.description | strip_html | truncate: 110 }}</p>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

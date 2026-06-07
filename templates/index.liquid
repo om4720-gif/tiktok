@@ -1,0 +1,147 @@
+{% section 'hero' %}
+
+{% section 'featured-collections' %}
+
+<section class="section spotlight-section">
+  <div class="section-inner split-section">
+    <div>
+      <p class="eyebrow">Street Style Spotlight</p>
+      <h2>Luxe on the Move</h2>
+      <p>Our signature leather covers make a statement whether you are heading to the office or across the city. Discover handcrafted elegance in motion.</p>
+      <div class="mini-feature-grid">
+        <span>Premium crocodile texture</span>
+        <span>City-ready elegance</span>
+        <span>Personalization ready</span>
+      </div>
+    </div>
+    <img src="{{ 'spotlight-cover.png' | asset_url }}" alt="Camel iPad cover in use" loading="lazy">
+  </div>
+</section>
+
+<section class="section benefits-section">
+  <div class="section-inner benefit-grid">
+    <article>
+      <span class="benefit-icon">Shield</span>
+      <h3>Premium Vegan Leather</h3>
+      <p>Luxurious crocodile-textured finish with soft microfiber interior.</p>
+    </article>
+    <article>
+      <span class="benefit-icon">Spark</span>
+      <h3>Personalized Engraving</h3>
+      <p>Custom text in your choice of elegant fonts and colors.</p>
+    </article>
+    <article>
+      <span class="benefit-icon">Fit</span>
+      <h3>Device-Specific Fit</h3>
+      <p>Precision-crafted for your exact MacBook or iPad model.</p>
+    </article>
+    <article>
+      <span class="benefit-icon">Ship</span>
+      <h3>Fast Worldwide Shipping</h3>
+      <p>Express delivery available to all major destinations.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section section-products">
+  <div class="section-inner">
+    <div class="section-heading">
+      <p class="eyebrow">Featured Collection</p>
+      <h2>Discover our most popular designs</h2>
+    </div>
+
+    <div class="product-grid">
+      {% assign featured = collections.frontpage.products | slice: 0, 3 %}
+      {% for product in featured %}
+        <article class="product-card">
+          <a href="{{ product.url }}">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | img_url: '720x720' }}" alt="{{ product.title }}" loading="lazy" />
+            {% else %}
+              <div class="product-fallback">{{ product.title }}</div>
+            {% endif %}
+            <div class="product-details">
+              <h3>{{ product.title }}</h3>
+              <span>{{ product.price | money }}</span>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+
+    <a class="button button-primary" href="/collections">View All Collections</a>
+  </div>
+</section>
+
+<section class="section seller-section">
+  <div class="section-inner split-section">
+    <img src="{{ 'seller-cover.jpg' | asset_url }}" alt="Burgundy personalized MacBook cover" loading="lazy">
+    <div>
+      <p class="eyebrow">Seller Showcase</p>
+      <h2>Designed by the Best, Loved by Customers</h2>
+      <p>Each cover is carefully crafted with premium vegan leather and a personal touch that helps every order feel considered.</p>
+      <div class="mini-feature-grid">
+        <span>Curated designer collaborations</span>
+        <span>Quality checked for every order</span>
+        <span>Fast fulfillment from trusted sellers</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section testimonials-section">
+  <div class="section-inner">
+    <div class="section-heading center">
+      <p class="eyebrow">Customer Notes</p>
+      <h2>What Our Customers Say</h2>
+    </div>
+    <div class="testimonial-grid">
+      <article>
+        <div class="stars">5 / 5</div>
+        <p>"Absolutely stunning quality. The crocodile texture is luxurious and the engraving is perfect."</p>
+        <strong>Sophia Anderson</strong>
+      </article>
+      <article>
+        <div class="stars">5 / 5</div>
+        <p>"Best purchase ever. My MacBook has never looked more elegant."</p>
+        <strong>Emma Chen</strong>
+      </article>
+      <article>
+        <div class="stars">5 / 5</div>
+        <p>"The personalization makes it feel special. It gets compliments everywhere I go."</p>
+        <strong>Isabella Martinez</strong>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section social-section">
+  <div class="section-inner">
+    <div class="section-heading center">
+      <p class="eyebrow">@luxecovers</p>
+      <h2>Share your style with us</h2>
+    </div>
+    <div class="social-grid">
+      <span style="--tile:#6B1F3D"></span>
+      <span style="--tile:#C2956E"></span>
+      <span style="--tile:#2C5530"></span>
+      <span style="--tile:#1E3A5F"></span>
+      <span style="--tile:#3E2723"></span>
+      <span style="--tile:#1A1A1A"></span>
+      <span style="--tile:#F4F1E8"></span>
+      <span style="--tile:#6B1F3D"></span>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter-section">
+  <div class="section-inner newsletter-inner">
+    <h2>Join Our <span>Exclusive</span> Community</h2>
+    <p>Subscribe for early access to new collections, special offers, and styling inspiration.</p>
+    {% form 'customer', class: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="Enter your email" required>
+      <button class="button button-gold" type="submit">Subscribe</button>
+    {% endform %}
+  </div>
+</section>

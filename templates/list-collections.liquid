@@ -1,0 +1,59 @@
+<section class="section collections-landing">
+  <div class="section-inner">
+    <div class="section-heading center">
+      <p class="eyebrow">Our Collections</p>
+      <h1>Luxury covers for every style</h1>
+      <p>Discover curated collections for MacBook, iPad, classic neutrals, and bold signature finishes.</p>
+    </div>
+
+    <div class="collection-feature-grid">
+      <a class="collection-feature-card" href="/collections/macbook-collection" style="--card:#6B1F3D">
+        <span>MacBook</span>
+        <h2>MacBook Collection</h2>
+        <p>Premium covers for all MacBook models.</p>
+      </a>
+      <a class="collection-feature-card" href="/collections/ipad-collection" style="--card:#C2956E">
+        <span>iPad</span>
+        <h2>iPad Collection</h2>
+        <p>Elegant protection tailored for your iPad.</p>
+      </a>
+      <a class="collection-feature-card" href="/pages/customize" style="--card:#3E2723">
+        <span>Classic</span>
+        <h2>Classic Neutrals</h2>
+        <p>Timeless beige, camel, chocolate, and cream tones.</p>
+      </a>
+      <a class="collection-feature-card" href="/pages/customize" style="--card:#2C5530">
+        <span>Bold</span>
+        <h2>Bold & Rich</h2>
+        <p>Deep burgundy, forest green, navy, and black finishes.</p>
+      </a>
+    </div>
+
+    {% if collections.size > 0 %}
+      <div class="section-heading compact">
+        <p class="eyebrow">Shop All</p>
+        <h2>Available collections</h2>
+      </div>
+
+      <div class="collection-grid">
+        {% for collection in collections %}
+          {% unless collection.handle == 'frontpage' %}
+            <article class="collection-card">
+              <a href="{{ collection.url }}">
+                {% if collection.image %}
+                  <img src="{{ collection.image | img_url: '720x520' }}" alt="{{ collection.title | escape }}" loading="lazy">
+                {% elsif collection.products.first.featured_image %}
+                  <img src="{{ collection.products.first.featured_image | img_url: '720x520' }}" alt="{{ collection.title | escape }}" loading="lazy">
+                {% else %}
+                  <div class="collection-icon">{{ collection.title | slice: 0 }}</div>
+                {% endif %}
+                <h3>{{ collection.title }}</h3>
+                <p>{{ collection.description | strip_html | truncate: 120 }}</p>
+              </a>
+            </article>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>

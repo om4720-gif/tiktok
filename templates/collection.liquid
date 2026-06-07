@@ -1,0 +1,61 @@
+<section class="section section-collection-hero">
+  <div class="section-inner">
+    <div class="section-heading center">
+      <p class="eyebrow">Collection</p>
+      <h1>{{ collection.title }}</h1>
+      <p>{{ collection.description | strip_html }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-products">
+  <div class="section-inner">
+    {% if collection.products_count > 0 %}
+      <div class="collection-toolbar">
+        <span>{{ collection.products_count }} products</span>
+        <form method="get">
+          <label for="SortBy">Sort by</label>
+          <select name="sort_by" id="SortBy" onchange="this.form.submit()">
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+
+      <div class="product-grid">
+        {% for product in collection.products %}
+          <article class="product-card">
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '720x720' }}" alt="{{ product.title }}" loading="lazy" />
+              {% else %}
+                <div class="product-fallback">{{ product.title }}</div>
+              {% endif %}
+              <div class="product-details">
+                <h3>{{ product.title }}</h3>
+                <span>
+                  {% if product.price_varies %}
+                    From {{ product.price_min | money }}
+                  {% else %}
+                    {{ product.price | money }}
+                  {% endif %}
+                </span>
+                {% unless product.available %}
+                  <small class="sold-out">Sold out</small>
+                {% endunless %}
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h2>No products found in this collection yet.</h2>
+        <p>You can still create a personalized MacBook or iPad cover.</p>
+        <a class="button button-primary" href="/pages/customize">Start customizing</a>
+      </div>
+    {% endif %}
+  </div>
+</section>

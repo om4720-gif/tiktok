@@ -1,0 +1,44 @@
+<section class="section products-section">
+  <div class="site-inner">
+    <div class="section-heading" style="text-align:center">
+      <p class="eyebrow">Featured Collection</p>
+      <h2>Discover our most popular <em>designs</em></h2>
+    </div>
+
+    <div class="product-grid">
+      {% assign featured = collections.frontpage.products | slice: 0, 3 %}
+      {% if featured.size == 0 %}
+        {% assign featured = collections.all.products | slice: 0, 3 %}
+      {% endif %}
+
+      {% for product in featured %}
+        <article class="product-card">
+          <a href="{{ product.url }}">
+            <div class="product-card__img">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '720x960' }}" alt="{{ product.title }}" loading="lazy" />
+              {% else %}
+                <div class="gallery-fallback" style="background:linear-gradient(135deg,#6B1F3D,#3E2723)">💼</div>
+              {% endif %}
+            </div>
+            <div class="product-card__body">
+              <div class="product-card__name">{{ product.title }}</div>
+              <div class="product-card__price">{{ product.price | money }}</div>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div class="products-cta">
+      <a class="button button-primary" href="/collections">View All Collections</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "presets": [{ "name": "Featured Products" }]
+}
+{% endschema %}

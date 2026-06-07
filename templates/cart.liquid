@@ -1,0 +1,180 @@
+<div class="cart-page">
+  <div class="site-inner">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="/">Home</a><span>›</span><span>Your Cart</span>
+    </nav>
+
+    <div class="cart-page__layout">
+
+      <!-- ── Left: Cart Items ── -->
+      <div class="cart-items-col">
+        <h1 class="cart-page__title">Your Cart
+          <span class="cart-page__count">({{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %})</span>
+        </h1>
+
+        {% if cart.item_count > 0 %}
+          <div class="cart-items-list">
+            {% for item in cart.items %}
+              <div class="cart-row" id="cart-row-{{ item.key | replace: ':', '-' }}">
+
+                <!-- Image -->
+                <div class="cart-row__img-wrap">
+                  {% if item.image %}
+                    <img src="{{ item.image | img_url: '200x200' }}" alt="{{ item.title }}" class="cart-row__img" />
+                  {% else %}
+                    <div class="cart-row__img-fallback">💼</div>
+                  {% endif %}
+                </div>
+
+                <!-- Details -->
+                <div class="cart-row__details">
+                  <a href="{{ item.url }}" class="cart-row__name">{{ item.product.title }}</a>
+                  {% if item.variant.title != 'Default Title' %}
+                    <div class="cart-row__variant">{{ item.variant.title }}</div>
+                  {% endif %}
+
+                  {% if item.properties %}
+                    <div class="cart-row__props">
+                      {% for p in item.properties %}
+                        {% if p.last != blank %}
+                          <span class="cart-prop">{{ p.first }}: <strong>{{ p.last }}</strong></span>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  <div class="cart-row__bottom">
+                    <!-- Quantity control -->
+                    <div class="cart-qty">
+                      <button class="cart-qty__btn"
+                        onclick="updateQty('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
+                      <span class="cart-qty__val">{{ item.quantity }}</span>
+                      <button class="cart-qty__btn"
+                        onclick="updateQty('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="cart-row__price">
+                      {% if item.original_line_price != item.final_line_price %}
+                        <span class="cart-row__original">{{ item.original_line_price | money }}</span>
+                      {% endif %}
+                      <span>{{ item.final_line_price | money }}</span>
+                    </div>
+
+                    <!-- Remove -->
+                    <button class="cart-row__remove" onclick="removeItem('{{ item.key }}')">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- Promo code -->
+          <div class="cart-promo">
+            <p class="cart-promo__label">Promo / Gift Code</p>
+            <div class="cart-promo__row">
+              <input type="text" id="promo-input" class="text-input" placeholder="Enter code" />
+              <button class="button button-secondary" onclick="applyPromo()">Apply</button>
+            </div>
+            <p id="promo-msg" class="cart-promo__msg" style="display:none"></p>
+          </div>
+
+        {% else %}
+          <div class="cart-empty-state">
+            <div class="cart-empty-state__icon">🛍</div>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added anything yet.</p>
+            <a href="/collections" class="button button-primary" style="margin-top:24px">Shop Collection</a>
+            <a href="/pages/customize" class="button button-secondary" style="margin-top:12px">Customize Yours</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- ── Right: Order Summary ── -->
+      {% if cart.item_count > 0 %}
+        <aside class="cart-summary">
+          <h2 class="cart-summary__title">Order Summary</h2>
+
+          <div class="cart-summary__lines">
+            <div class="cart-summary__line">
+              <span>Subtotal ({{ cart.item_count }} items)</span>
+              <span id="summary-subtotal">{{ cart.total_price | money }}</span>
+            </div>
+
+            {% if cart.total_discount > 0 %}
+              <div class="cart-summary__line cart-summary__line--discount">
+                <span>Discount</span>
+                <span>−{{ cart.total_discount | money }}</span>
+              </div>
+            {% endif %}
+
+            <div class="cart-summary__line">
+              <span>Shipping</span>
+              <span class="cart-summary__shipping">Calculated at checkout</span>
+            </div>
+          </div>
+
+          <div class="cart-summary__total">
+            <span>Total</span>
+            <span id="summary-total">{{ cart.total_price | money }}</span>
+          </div>
+
+          <!-- Trust badges -->
+          <div class="cart-trust">
+            <div class="cart-trust__item">🔒 Secure checkout</div>
+            <div class="cart-trust__item">🚚 Free shipping over 1,500 EGP</div>
+            <div class="cart-trust__item">↩ 14-day returns</div>
+          </div>
+
+          <a href="/checkout" class="button button-primary btn-full cart-checkout-btn">
+            Proceed to Checkout →
+          </a>
+          <a href="/collections" class="cart-continue">← Continue Shopping</a>
+
+          <!-- Payment icons -->
+          <div class="payment-icons">
+            <span>💳</span><span>🏦</span><span>📱</span>
+            <p>We accept Visa, Mastercard, and cash on delivery</p>
+          </div>
+        </aside>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+<script>
+async function updateQty(key, qty) {
+  if (qty < 0) return;
+  const res = await fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: key, quantity: qty })
+  });
+  window.location.reload();
+}
+
+async function removeItem(key) {
+  await fetch('/cart/change.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: key, quantity: 0 })
+  });
+  window.location.reload();
+}
+
+function applyPromo() {
+  const code = document.getElementById('promo-input').value.trim();
+  const msg = document.getElementById('promo-msg');
+  msg.style.display = 'block';
+  if (!code) { msg.textContent = 'Please enter a code.'; msg.style.color = '#c00'; return; }
+  // Shopify discount codes apply at checkout
+  msg.textContent = 'Code will be applied at checkout.';
+  msg.style.color = 'var(--burgundy)';
+}
+</script>

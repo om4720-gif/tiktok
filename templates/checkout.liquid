@@ -1,0 +1,123 @@
+{% comment %}
+  Shopify controls the /checkout page — this file is the Thank You / Order Confirmation page
+  accessible at /thank_you after a successful order. Shopify Plus merchants can customize
+  /checkout directly; for non-Plus the native Shopify checkout is used.
+  This template handles the order confirmation experience.
+{% endcomment %}
+
+{% if order %}
+<!-- ── Order Confirmation ── -->
+<div class="thankyou-page">
+  <div class="site-inner">
+
+    <div class="thankyou-hero">
+      <div class="thankyou-check">✓</div>
+      <p class="eyebrow">Order Confirmed</p>
+      <h1>Thank you, {{ order.shipping_address.first_name }}!</h1>
+      <p class="thankyou-sub">
+        Your order <strong>#{{ order.order_number }}</strong> has been placed successfully.
+        A confirmation has been sent to <strong>{{ order.email }}</strong>.
+      </p>
+    </div>
+
+    <div class="thankyou-layout">
+
+      <!-- Order details -->
+      <div class="thankyou-order">
+        <h2>Order Details</h2>
+
+        <div class="order-items">
+          {% for line_item in order.line_items %}
+            <div class="order-item">
+              {% if line_item.image %}
+                <img src="{{ line_item.image | img_url: '120x120' }}" alt="{{ line_item.title }}" class="order-item__img" />
+              {% else %}
+                <div class="order-item__img order-item__img--fallback">💼</div>
+              {% endif %}
+              <div class="order-item__info">
+                <div class="order-item__name">{{ line_item.product.title }}</div>
+                {% if line_item.variant.title != 'Default Title' %}
+                  <div class="order-item__variant">{{ line_item.variant.title }}</div>
+                {% endif %}
+                {% for prop in line_item.properties %}
+                  {% if prop.last != blank %}
+                    <div class="order-item__prop">{{ prop.first }}: {{ prop.last }}</div>
+                  {% endif %}
+                {% endfor %}
+                <div class="order-item__qty">Qty: {{ line_item.quantity }}</div>
+              </div>
+              <div class="order-item__price">{{ line_item.final_line_price | money }}</div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="order-totals">
+          <div class="order-total-row">
+            <span>Subtotal</span>
+            <span>{{ order.subtotal_price | money }}</span>
+          </div>
+          {% if order.total_discounts > 0 %}
+            <div class="order-total-row order-total-row--discount">
+              <span>Discount</span>
+              <span>−{{ order.total_discounts | money }}</span>
+            </div>
+          {% endif %}
+          <div class="order-total-row">
+            <span>Shipping</span>
+            <span>{{ order.shipping_price | money }}</span>
+          </div>
+          <div class="order-total-row order-total-row--total">
+            <span>Total</span>
+            <span>{{ order.total_price | money }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping info -->
+      <aside class="thankyou-aside">
+        <div class="thankyou-card">
+          <h3>Shipping Address</h3>
+          <address>
+            {{ order.shipping_address.name }}<br>
+            {{ order.shipping_address.address1 }}<br>
+            {% if order.shipping_address.address2 != blank %}
+              {{ order.shipping_address.address2 }}<br>
+            {% endif %}
+            {{ order.shipping_address.city }}, {{ order.shipping_address.country }}<br>
+            {{ order.shipping_address.phone }}
+          </address>
+        </div>
+
+        <div class="thankyou-card">
+          <h3>Delivery Estimate</h3>
+          <p>📦 3–5 business days</p>
+          <p style="font-size:0.85rem;color:var(--neutral-500);margin-top:6px">You'll receive a tracking link by email once your order ships.</p>
+        </div>
+
+        <div class="thankyou-card thankyou-card--highlight">
+          <h3>Need Help?</h3>
+          <p>We're here for you.</p>
+          <a href="/pages/contact" class="button button-secondary" style="margin-top:12px;width:100%">Contact Support</a>
+        </div>
+
+        <div class="thankyou-actions">
+          <a href="/collections" class="button button-primary btn-full">Continue Shopping</a>
+          <a href="/pages/customize" class="button button-secondary btn-full" style="margin-top:10px">Create Another</a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+{% else %}
+<!-- Fallback if accessed directly without an order -->
+<div class="cart-page">
+  <div class="site-inner" style="text-align:center;padding:80px 24px">
+    <div style="font-size:3rem;margin-bottom:20px">✓</div>
+    <h1 style="font-family:var(--font-serif);font-weight:400;margin-bottom:12px">Order Confirmed!</h1>
+    <p style="color:var(--neutral-500);margin-bottom:32px">Thank you for your purchase. Check your email for confirmation details.</p>
+    <a href="/collections" class="button button-primary">Continue Shopping</a>
+  </div>
+</div>
+{% endif %}

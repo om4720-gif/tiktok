@@ -1,37 +1,203 @@
-<div class="collection-header">
+<!-- ── Collection Header ── -->
+<div class="collection-hero">
   <div class="site-inner">
-    <p class="eyebrow">{{ collection.title }}</p>
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/collections">Collections</a>
+      <span>›</span>
+      <span>{{ collection.title }}</span>
+    </nav>
+    <p class="eyebrow">Our Collection</p>
     <h1>{{ collection.title }}</h1>
     {% if collection.description != blank %}
-      <p style="margin-top:12px;color:var(--neutral-600);max-width:600px">{{ collection.description }}</p>
+      <p class="collection-desc">{{ collection.description }}</p>
     {% endif %}
+    <div class="collection-meta">
+      <span>{{ collection.products_count }} products</span>
+    </div>
   </div>
 </div>
 
-<section class="section" style="background:var(--cream)">
+<!-- ── Filter & Sort Bar ── -->
+<div class="filter-bar">
+  <div class="site-inner filter-bar__inner">
+    <div class="filter-chips">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="macbook">MacBook</button>
+      <button class="filter-chip" data-filter="ipad">iPad</button>
+      <button class="filter-chip" data-filter="burgundy">Burgundy</button>
+      <button class="filter-chip" data-filter="black">Black</button>
+      <button class="filter-chip" data-filter="camel">Camel</button>
+      <button class="filter-chip" data-filter="navy">Navy</button>
+    </div>
+    <div class="sort-control">
+      <label for="sort-select">Sort by</label>
+      <select id="sort-select" onchange="sortProducts(this.value)">
+        <option value="manual">Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="title-asc">Name A–Z</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ── Product Grid ── -->
+<section class="collection-body">
   <div class="site-inner">
     {% if collection.products.size > 0 %}
-      <div class="collection-grid">
+      <div class="coll-grid" id="product-grid">
         {% for product in collection.products %}
-          <article class="product-card">
-            <a href="{{ product.url }}">
-              <div class="product-card__img">
-                {% if product.featured_image %}
-                  <img src="{{ product.featured_image | img_url: '720x960' }}" alt="{{ product.title }}" loading="lazy" />
-                {% else %}
-                  <div class="gallery-fallback" style="background:linear-gradient(135deg,#6B1F3D,#3E2723)">💼</div>
+          <article class="prod-card"
+            data-title="{{ product.title | downcase }}"
+            data-price="{{ product.price }}">
+
+            <!-- Badges -->
+            <div class="prod-card__badges">
+              {% if product.available == false %}
+                <span class="badge badge--sold">Sold Out</span>
+              {% elsif product.compare_at_price > product.price %}
+                <span class="badge badge--sale">Sale</span>
+              {% else %}
+                <span class="badge badge--new">New</span>
+              {% endif %}
+            </div>
+
+            <!-- Image -->
+            <a href="{{ product.url }}" class="prod-card__img-wrap">
+              {% if product.featured_image %}
+                <img
+                  class="prod-card__img prod-card__img--primary"
+                  src="{{ product.featured_image | img_url: '720x960' }}"
+                  alt="{{ product.title }}"
+                  loading="lazy" />
+                {% if product.images.size > 1 %}
+                  <img
+                    class="prod-card__img prod-card__img--hover"
+                    src="{{ product.images[1] | img_url: '720x960' }}"
+                    alt="{{ product.title }} alternate"
+                    loading="lazy" />
                 {% endif %}
-              </div>
-              <div class="product-card__body">
-                <div class="product-card__name">{{ product.title }}</div>
-                <div class="product-card__price">{{ product.price | money }}</div>
+              {% else %}
+                <div class="prod-card__fallback">💼</div>
+              {% endif %}
+              <div class="prod-card__overlay">
+                <span class="prod-card__quick">Quick View</span>
               </div>
             </a>
+
+            <!-- Info -->
+            <div class="prod-card__body">
+              <div class="prod-card__top">
+                <h3 class="prod-card__name">{{ product.title }}</h3>
+                <div class="prod-card__prices">
+                  {% if product.compare_at_price > product.price %}
+                    <span class="prod-card__compare">{{ product.compare_at_price | money }}</span>
+                  {% endif %}
+                  <span class="prod-card__price">{{ product.price | money }}</span>
+                </div>
+              </div>
+
+              {% if product.variants.size > 1 %}
+                <div class="prod-card__variants">
+                  {% for variant in product.variants limit: 5 %}
+                    <span class="prod-card__variant-dot"
+                      style="background:{% case variant.title %}{% when 'Burgundy' %}#6B1F3D{% when 'Black' %}#1A1A1A{% when 'Camel' %}#C2956E{% when 'Navy' %}#1E3A5F{% when 'Forest' %}#2C5530{% when 'Ivory' %}#F4F1E8{% when 'Chocolate' %}#3E2723{% else %}#999{% endcase %}"
+                      title="{{ variant.title }}">
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <div class="prod-card__actions">
+                <a href="{{ product.url }}" class="button button-primary prod-card__btn">Customize</a>
+                <button class="prod-card__wishlist" aria-label="Save">♡</button>
+              </div>
+            </div>
           </article>
         {% endfor %}
       </div>
+
+      <!-- No results message -->
+      <div id="no-results" class="no-results" style="display:none">
+        <p>No products match your filter.</p>
+        <button class="button button-secondary" onclick="resetFilters()">Clear Filter</button>
+      </div>
+
     {% else %}
-      <p style="text-align:center;color:var(--neutral-500);padding:60px 0">No products found in this collection.</p>
+      <div class="empty-collection">
+        <p>No products found in this collection yet.</p>
+        <a href="/collections" class="button button-secondary">Browse All Collections</a>
+      </div>
     {% endif %}
   </div>
 </section>
+
+<!-- ── You May Also Like ── -->
+<section class="section" style="background:var(--white)">
+  <div class="site-inner">
+    <div class="section-heading" style="text-align:center">
+      <p class="eyebrow">Explore More</p>
+      <h2>Complete the <em>Look</em></h2>
+    </div>
+    <div class="collections-nav">
+      <a href="/collections/macbook-covers" class="coll-nav-card">
+        <div class="coll-nav-card__icon">💻</div>
+        <h3>MacBook Covers</h3>
+        <p>Air & Pro models</p>
+      </a>
+      <a href="/collections/ipad-covers" class="coll-nav-card">
+        <div class="coll-nav-card__icon">📱</div>
+        <h3>iPad Covers</h3>
+        <p>Mini, Air & Pro</p>
+      </a>
+      <a href="/pages/customize" class="coll-nav-card coll-nav-card--highlight">
+        <div class="coll-nav-card__icon">✦</div>
+        <h3>Create Yours</h3>
+        <p>Fully personalized</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Filter chips
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterProducts(chip.dataset.filter);
+    });
+  });
+
+  function filterProducts(filter) {
+    const cards = document.querySelectorAll('.prod-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const title = card.dataset.title || '';
+      const show = filter === 'all' || title.includes(filter);
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  function resetFilters() {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+    filterProducts('all');
+  }
+
+  function sortProducts(method) {
+    const grid = document.getElementById('product-grid');
+    const cards = [...grid.querySelectorAll('.prod-card')];
+    cards.sort((a, b) => {
+      if (method === 'price-asc') return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+      if (method === 'price-desc') return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+      if (method === 'title-asc') return a.dataset.title.localeCompare(b.dataset.title);
+      return 0;
+    });
+    cards.forEach(c => grid.appendChild(c));
+  }
+</script>

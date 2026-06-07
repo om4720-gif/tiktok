@@ -1,0 +1,209 @@
+<section class="section customizer-section" data-customizer>
+  <div class="site-inner">
+    <div class="customizer-layout">
+
+      <!-- ── Preview Panel ── -->
+      <div class="preview-panel">
+        <div class="preview-panel__frame">
+          <img class="preview-panel__img"
+            src="{{ 'product-macbook-burgundy.jpg' | asset_url }}"
+            alt="Product preview" />
+          <div class="preview-panel__engraving hidden">
+            <span class="engraving-text" style="font-size:1.4rem;letter-spacing:0.06em;font-weight:500"></span>
+          </div>
+          <div class="preview-panel__zoom">🔍</div>
+        </div>
+
+        <div style="margin-top:20px;background:var(--white);border-radius:var(--radius);padding:18px 20px;font-size:0.85rem;color:var(--neutral-600);line-height:1.9">
+          <strong style="color:var(--neutral-900);display:block;margin-bottom:8px">What's included</strong>
+          • Premium crocodile-textured vegan leather<br>
+          • Soft microfiber interior lining<br>
+          • Precision fit for your device<br>
+          • Scratch-resistant &amp; durable<br>
+          • Handcrafted with care
+        </div>
+      </div>
+
+      <!-- ── Options Panel ── -->
+      <div class="options-panel">
+        <h1>Design Your <em>Perfect Cover</em></h1>
+        <p>Create a one-of-a-kind luxury cover tailored just for you</p>
+
+        <div class="price-display">500 EGP</div>
+        <div class="price-breakdown"></div>
+
+        <!-- Device: MacBook -->
+        <div class="option-group">
+          <span class="option-label">Select Device — MacBook</span>
+          <div class="device-grid">
+            <button class="device-btn"
+              data-device-id="macbook-air-13" data-device-name='MacBook Air 13"'
+              data-device-type="macbook" data-price="500"
+              data-variant-id="{{ section.settings.variant_mb_air_13 | default: '' }}">
+              <span class="device-btn__name">MacBook Air 13"</span>
+              <span class="device-btn__price">500 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+            <button class="device-btn"
+              data-device-id="macbook-air-15" data-device-name='MacBook Air 15"'
+              data-device-type="macbook" data-price="550"
+              data-variant-id="{{ section.settings.variant_mb_air_15 | default: '' }}">
+              <span class="device-btn__name">MacBook Air 15"</span>
+              <span class="device-btn__price">550 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+            <button class="device-btn"
+              data-device-id="macbook-pro-14" data-device-name='MacBook Pro 14"'
+              data-device-type="macbook" data-price="550"
+              data-variant-id="{{ section.settings.variant_mb_pro_14 | default: '' }}">
+              <span class="device-btn__name">MacBook Pro 14"</span>
+              <span class="device-btn__price">550 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+            <button class="device-btn"
+              data-device-id="macbook-pro-16" data-device-name='MacBook Pro 16"'
+              data-device-type="macbook" data-price="600"
+              data-variant-id="{{ section.settings.variant_mb_pro_16 | default: '' }}">
+              <span class="device-btn__name">MacBook Pro 16"</span>
+              <span class="device-btn__price">600 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Device: iPad -->
+        <div class="option-group">
+          <span class="option-label">iPad</span>
+          <div class="device-grid">
+            <button class="device-btn"
+              data-device-id="ipad-mini" data-device-name="iPad Mini"
+              data-device-type="ipad" data-price="400"
+              data-variant-id="{{ section.settings.variant_ipad_mini | default: '' }}">
+              <span class="device-btn__name">iPad Mini</span>
+              <span class="device-btn__price">400 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+            <button class="device-btn"
+              data-device-id="ipad-air-11" data-device-name='iPad Air 11"'
+              data-device-type="ipad" data-price="450"
+              data-variant-id="{{ section.settings.variant_ipad_air_11 | default: '' }}">
+              <span class="device-btn__name">iPad Air 11"</span>
+              <span class="device-btn__price">450 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+            <button class="device-btn"
+              data-device-id="ipad-pro-11" data-device-name='iPad Pro 11"'
+              data-device-type="ipad" data-price="500"
+              data-variant-id="{{ section.settings.variant_ipad_pro_11 | default: '' }}">
+              <span class="device-btn__name">iPad Pro 11"</span>
+              <span class="device-btn__price">500 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+            <button class="device-btn"
+              data-device-id="ipad-pro-13" data-device-name='iPad Pro 13"'
+              data-device-type="ipad" data-price="550"
+              data-variant-id="{{ section.settings.variant_ipad_pro_13 | default: '' }}">
+              <span class="device-btn__name">iPad Pro 13"</span>
+              <span class="device-btn__price">550 EGP</span>
+              <span class="device-btn__check">✓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Color -->
+        <div class="option-group">
+          <span class="option-label">Select Color</span>
+          <div class="color-swatches">
+            <button class="color-swatch" style="background:#6B1F3D" data-color-id="burgundy" data-color-name="Burgundy Crocodile" title="Burgundy Crocodile"></button>
+            <button class="color-swatch" style="background:#3E2723" data-color-id="chocolate" data-color-name="Chocolate Brown" title="Chocolate Brown"></button>
+            <button class="color-swatch" style="background:#1A1A1A" data-color-id="black" data-color-name="Black Crocodile" title="Black Crocodile"></button>
+            <button class="color-swatch" style="background:#C2956E" data-color-id="camel" data-color-name="Camel Tan" title="Camel Tan"></button>
+            <button class="color-swatch" style="background:#2C5530" data-color-id="forest" data-color-name="Forest Green" title="Forest Green"></button>
+            <button class="color-swatch" style="background:#1E3A5F" data-color-id="navy" data-color-name="Navy Blue" title="Navy Blue"></button>
+            <button class="color-swatch" style="background:#F4F1E8;border:2px solid #d7d0c7" data-color-id="ivory" data-color-name="Ivory Cream" title="Ivory Cream"></button>
+          </div>
+          <div class="color-name-display">Burgundy Crocodile</div>
+        </div>
+
+        <!-- Engraving -->
+        <div class="option-group">
+          <div class="engraving-box">
+            <div class="engraving-toggle">
+              <label>Personalized Engraving</label>
+              <div class="toggle-row">
+                <input type="checkbox" id="engraving-toggle" class="toggle-check" checked />
+                <span>Add engraving (+30 EGP)</span>
+              </div>
+            </div>
+
+            <div class="engraving-fields">
+              <div>
+                <label class="field-label">Your text (max 25 characters)</label>
+                <input type="text" id="engraving-text" class="text-input" maxlength="25" placeholder="Enter your name or text" />
+                <div class="field-count">0 / 25</div>
+              </div>
+
+              <div>
+                <label class="field-label">Font Style</label>
+                <div class="font-grid">
+                  <button class="font-btn script" data-font="Dancing Script, cursive" data-font-name="Elegant Script">Elegant Script</button>
+                  <button class="font-btn serif" data-font="Playfair Display, serif" data-font-name="Modern Serif">Modern Serif</button>
+                  <button class="font-btn sans" data-font="Inter, sans-serif" data-font-name="Minimal Sans">Minimal Sans</button>
+                  <button class="font-btn script" data-font="Dancing Script, cursive" data-font-name="Classic Signature" style="font-size:1rem">Classic Signature</button>
+                </div>
+              </div>
+
+              <div>
+                <label class="field-label">Engraving Color</label>
+                <div class="color-swatches" style="gap:8px">
+                  <button class="engraving-color-swatch color-swatch" style="width:32px;height:32px;background:#D4AF37" data-color="#D4AF37" data-color-name="Gold" title="Gold"></button>
+                  <button class="engraving-color-swatch color-swatch" style="width:32px;height:32px;background:#C0C0C0" data-color="#C0C0C0" data-color-name="Silver" title="Silver"></button>
+                  <button class="engraving-color-swatch color-swatch" style="width:32px;height:32px;background:#B76E79" data-color="#B76E79" data-color-name="Rose Gold" title="Rose Gold"></button>
+                  <button class="engraving-color-swatch color-swatch" style="width:32px;height:32px;background:#fff;border:2px solid #ccc" data-color="#FFFFFF" data-color-name="White" title="White"></button>
+                  <button class="engraving-color-swatch color-swatch" style="width:32px;height:32px;background:#000" data-color="#000000" data-color-name="Black" title="Black"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="option-group">
+          <span class="option-label">Quantity</span>
+          <div class="qty-control">
+            <button class="qty-btn qty-minus">−</button>
+            <span class="qty-value">1</span>
+            <button class="qty-btn qty-plus">+</button>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="cta-group">
+          <button class="button button-primary btn-full customizer-buy-btn">BUY NOW</button>
+          <button class="button button-secondary btn-full customizer-add-btn">ADD TO CART</button>
+        </div>
+
+        <div class="delivery-note">
+          📦 <strong>Estimated Delivery:</strong> 3–5 business days · Express shipping available at checkout
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Customizer",
+  "settings": [
+    { "type": "text", "id": "variant_mb_air_13", "label": "Variant ID — MacBook Air 13" },
+    { "type": "text", "id": "variant_mb_air_15", "label": "Variant ID — MacBook Air 15" },
+    { "type": "text", "id": "variant_mb_pro_14", "label": "Variant ID — MacBook Pro 14" },
+    { "type": "text", "id": "variant_mb_pro_16", "label": "Variant ID — MacBook Pro 16" },
+    { "type": "text", "id": "variant_ipad_mini", "label": "Variant ID — iPad Mini" },
+    { "type": "text", "id": "variant_ipad_air_11", "label": "Variant ID — iPad Air 11" },
+    { "type": "text", "id": "variant_ipad_pro_11", "label": "Variant ID — iPad Pro 11" },
+    { "type": "text", "id": "variant_ipad_pro_13", "label": "Variant ID — iPad Pro 13" }
+  ],
+  "presets": [{ "name": "Product Customizer" }]
+}
+{% endschema %}

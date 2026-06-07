@@ -1,0 +1,95 @@
+<div class="product-page">
+  <div class="site-inner">
+    <div class="product-page-grid">
+
+      <!-- Gallery -->
+      <div class="product-gallery">
+        <div class="product-gallery__main">
+          {% if product.featured_image %}
+            <img id="main-product-img"
+              src="{{ product.featured_image | img_url: '900x900' }}"
+              alt="{{ product.title }}" />
+          {% endif %}
+        </div>
+        {% if product.images.size > 1 %}
+          <div class="product-gallery__thumbs">
+            {% for image in product.images limit: 5 %}
+              <div class="product-gallery__thumb {% if forloop.first %}active{% endif %}"
+                onclick="document.getElementById('main-product-img').src='{{ image | img_url: '900x900' }}';this.parentElement.querySelectorAll('.product-gallery__thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active')">
+                <img src="{{ image | img_url: '200x200' }}" alt="{{ product.title }}" />
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Info & Form -->
+      <div class="product-info">
+        <p class="eyebrow product-info__eyebrow">Personalized Luxury</p>
+        <h1>{{ product.title }}</h1>
+        <p class="product-info__price" id="product-price">{{ product.price | money }}</p>
+        <div class="product-info__desc">{{ product.description }}</div>
+
+        {% form 'product', product, id: 'product-form' %}
+          {% if product.variants.size > 1 %}
+            <div class="option-group">
+              <label class="option-label" for="variant-select">{{ product.options.first }}</label>
+              <select id="variant-select" name="id" class="text-input" onchange="updateVariantPrice(this)">
+                {% for variant in product.variants %}
+                  <option value="{{ variant.id }}" data-price="{{ variant.price }}" {% unless variant.available %}disabled{% endunless %}>
+                    {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+          {% endif %}
+
+          <div class="option-group">
+            <label class="option-label" for="engraving_text">Engraving text <span style="font-weight:400;text-transform:none;font-size:0.8rem;color:var(--neutral-400)">(optional · +30 EGP)</span></label>
+            <input class="text-input" type="text" id="engraving_text" name="properties[Engraving text]" maxlength="25" placeholder="Your name or personal message" />
+          </div>
+
+          <div class="option-group">
+            <label class="option-label" for="engraving_font">Engraving font</label>
+            <select class="text-input" id="engraving_font" name="properties[Engraving font]">
+              <option>Elegant Script</option>
+              <option>Modern Serif</option>
+              <option>Minimal Sans</option>
+              <option>Classic Signature</option>
+            </select>
+          </div>
+
+          <div class="option-group">
+            <label class="option-label" for="engraving_color">Engraving color</label>
+            <select class="text-input" id="engraving_color" name="properties[Engraving color]">
+              <option>Gold</option>
+              <option>Silver</option>
+              <option>Rose Gold</option>
+              <option>White</option>
+              <option>Black</option>
+            </select>
+          </div>
+
+          <div class="cta-group" style="margin-top:24px">
+            <button type="submit" name="checkout" class="button button-primary btn-full">BUY NOW</button>
+            <button type="submit" class="button button-secondary btn-full">ADD TO CART</button>
+          </div>
+        {% endform %}
+
+        <div class="delivery-note" style="margin-top:16px">
+          📦 <strong>Estimated Delivery:</strong> 3–5 business days. Express available at checkout.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function updateVariantPrice(select) {
+  const opt = select.options[select.selectedIndex];
+  const cents = parseInt(opt.dataset.price, 10);
+  document.getElementById('product-price').textContent = (cents / 100).toLocaleString('ar-EG', {style:'currency',currency:'EGP'});
+}
+</script>

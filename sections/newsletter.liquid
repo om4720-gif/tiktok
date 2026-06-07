@@ -1,0 +1,26 @@
+<section class="section newsletter-section">
+  <div class="site-inner">
+    <div class="newsletter-inner">
+      <p class="eyebrow" style="color:var(--gold)">Exclusive Community</p>
+      <h2>Join Our <em>Exclusive</em> Circle</h2>
+      <p>Subscribe for early access to new collections, special offers, and styling inspiration.</p>
+      {% form 'customer', id: 'newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter" />
+        <div class="newsletter-form">
+          <input class="newsletter-input" type="email" name="contact[email]" placeholder="Enter your email address" required />
+          <button type="submit" class="button button-gold">Subscribe</button>
+        </div>
+        {% if form.posted_successfully? %}
+          <p style="color:var(--gold);margin-top:12px;font-size:0.9rem">✓ Thank you for subscribing!</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

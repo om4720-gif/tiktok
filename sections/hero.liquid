@@ -1,0 +1,48 @@
+<section class="hero-section">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="hero-badge">✦ Handcrafted Luxury</span>
+      <h1>
+        Luxury Personalized
+        <em>MacBook &amp; iPad Covers</em>
+      </h1>
+      <p>Crafted for elegance. Personalized for you. Experience the perfect blend of premium crocodile-textured leather and custom engraving.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/pages/customize">
+          Customize Yours →
+        </a>
+        <a class="button button-secondary" href="/collections">
+          View Collection
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-trust__item">🛡 Premium Vegan Leather</div>
+        <div class="hero-trust__item">✦ Custom Engraving</div>
+        <div class="hero-trust__item">🚚 Fast Worldwide Shipping</div>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <div class="hero-media__frame">
+        {% if section.settings.hero_image %}
+          <img src="{{ section.settings.hero_image | img_url: '900x900' }}" alt="Luxury personalized cover" loading="eager" />
+        {% else %}
+          <img src="{{ 'product-hero.jpg' | asset_url }}" alt="Luxury personalized cover" loading="eager" />
+        {% endif %}
+        <div class="hero-media__shine"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "text", "id": "hero_heading", "label": "Heading", "default": "Luxury Personalized MacBook & iPad Covers" },
+    { "type": "textarea", "id": "hero_subtext", "label": "Subtext" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

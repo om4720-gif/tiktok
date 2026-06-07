@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement bar text",
+        "default": "✦ Free shipping on orders over 1,500 EGP  ·  Handcrafted luxury, made to order ✦"
+      },
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary brand color",
+        "default": "#6B1F3D"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent (gold) color",
+        "default": "#D4AF37"
+      },
+      {
+        "type": "text",
+        "id": "instagram_url",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "tiktok_url",
+        "label": "TikTok URL"
+      }
+    ]
+  }
+]
